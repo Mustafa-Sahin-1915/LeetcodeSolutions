@@ -106,6 +106,7 @@ public class AddTwoNumbersSolution {
         return result;
     }
 
+
     public static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         ListNode result=null;
         ListNode next = null;
