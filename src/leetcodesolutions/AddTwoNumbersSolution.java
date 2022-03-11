@@ -66,16 +66,17 @@ public class AddTwoNumbersSolution {
     public static void main(String[] args) {
         //[9]
         ListNode l1 = new ListNode(9,null);
-        //[1,9,9,9,9,9,9,9,9,9]
-        ListNode l2 = new ListNode(1,new ListNode(9,new ListNode(9,new ListNode(9,new ListNode(9,new ListNode(9,new ListNode(9, new ListNode(9,new ListNode(9,null)))))))));
+        //[1,9,9]
+        ListNode l2 = new ListNode(1,new ListNode(9,new ListNode(9,null)));
 
-        ListNode res = addTwoNumbers(l1,l2);
+        ListNode res = addTwoNumbers2(l1,l2);
         StringBuilder num1 = new StringBuilder();
         while(res!=null){
             num1.append(String.valueOf(res.val));
             res = res.next;
         }
         System.out.println(num1.toString());
+        //0001
     }
 
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -103,5 +104,58 @@ public class AddTwoNumbersSolution {
             next = result;
         }
         return result;
+    }
+
+    public static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        ListNode result=null;
+        ListNode next = null;
+        int leap =0;
+        int val = 0;
+        int sum =0;
+        while(l1!=null || l2!=null){
+            if (l1!=null){
+                if (l2!=null){
+                    sum = l1.val + l2.val + leap;
+                    if (sum/10==0){
+                        leap = 0;
+                        val = sum;
+                    }else{
+                        leap = sum /10;
+                        val = sum % 10;
+                    }
+                }else{
+                    val = l1.val + leap;
+                    if (val/10==0){
+                        leap = 0;
+                    }else{
+                        leap = val /10;
+                        val = val % 10;
+                    }
+                }
+            }else if (l2!=null){
+                val = l2.val + leap;
+                if (val/10==0){
+                    leap = 0;
+                }else{
+                    leap = val /10;
+                    val = val % 10;
+                }
+            }
+            result =new ListNode(val,next);
+            next = result;
+            if (l1!=null) l1 = l1.next;
+            if (l2!=null) l2 = l2.next;
+        }
+        if (leap!=0){
+            result =new ListNode(leap,next);
+        }
+        ListNode result2 =null;
+        next = null;
+        while (result!=null){
+            result2 = new ListNode(result.val,next);
+            result = result.next;
+            next =result2;
+        }
+        return result2;
     }
 }
